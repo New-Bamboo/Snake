@@ -5,8 +5,9 @@ function checkSupported() {
     this.currentPosition = {'x':50, 'y':50};
     this.gridSize = 10;
     snakeBody = [];
-    drawSnake();
+    snakeLength = 3;
     makeFoodItem();
+    drawSnake();
     direction = 'right';
     setInterval(moveSnake,100);
   } else {
@@ -18,9 +19,13 @@ function drawSnake() {
   snakeBody.push([currentPosition['x'], currentPosition['y']]);
   ctx.fillStyle = "rgb(200,0,0)";
   ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize, gridSize);
-  if (snakeBody.length > 3) {
+  if (snakeBody.length > snakeLength) {
     var itemToRemove = snakeBody.shift();
     ctx.clearRect(itemToRemove[0], itemToRemove[1], gridSize, gridSize);
+  }
+  if (currentPosition['x'] == suggestedPoint[0] && currentPosition['y'] == suggestedPoint[1]) {
+    makeFoodItem();
+    snakeLength += 1;
   }
 }
 
@@ -87,7 +92,7 @@ function executeMove(dirValue, axisType, axisValue) {
 }
 
 function makeFoodItem(){
-  suggestedPoint = [Math.floor(Math.random()*(canvas.width/10))*10, Math.floor(Math.random()*(canvas.height/10))*10];
+  suggestedPoint = [Math.floor(Math.random()*(canvas.width/gridSize))*gridSize, Math.floor(Math.random()*(canvas.height/gridSize))*gridSize];
   if (snakeBody.some(hasPoint)) {
     makeFoodItem();
   } else {
