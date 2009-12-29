@@ -1,0 +1,8 @@
+%html
+  %head
+    %title Snake
+    %link{:rel => 'stylesheet', :href => '/reset.css'}
+    %link{:rel => 'stylesheet', :href => '/master.css'}
+    %script{:src => "snake.js", :type => "text/javascript"}
+  %body{:onload => "checkSupported();"}
+    %canvas#canvas{:width => 400, :height => 300}

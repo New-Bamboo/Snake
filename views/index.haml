@@ -1,0 +1,8 @@
+%html
+  %head
+    %title Descartes
+    %link{:rel => 'stylesheet', :href => '/reset.css'}
+    %link{:rel => 'stylesheet', :href => '/master.css'}
+    %script{:src => "play.js", :type => "text/javascript"}
+  %body{:onload => "draw();"}
+    %canvas#canvas{:width => 400, :height => 300}
