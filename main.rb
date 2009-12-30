@@ -5,11 +5,11 @@ require 'haml'
 set :haml, {:format => :html5}
 
 get '/' do
-  haml :index
+  haml :game
 end
 
-get '/game' do
-  haml :game
+get '/mosaic' do
+  haml :index
 end
 
 get '/reset.css' do
