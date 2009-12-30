@@ -5,4 +5,17 @@
     %link{:rel => 'stylesheet', :href => '/master.css'}
     %script{:src => "snake.js", :type => "text/javascript"}
   %body{:onload => "checkSupported();"}
+    #bar
+      %span#logo SNAKE
+      #score_container
+        Score:
+        %span#score 0
+      #play_menu
+        %button{:onclick => "pause();document.getElementById('play_menu').style.display='none';document.getElementById('pause_menu').style.display='block';"} Pause    
+      #pause_menu
+        %button{:onclick => "restart();document.getElementById('play_menu').style.display='block';document.getElementById('pause_menu').style.display='none';"} Restart
+        %button{:onclick => "play();document.getElementById('play_menu').style.display='block';document.getElementById('pause_menu').style.display='none';"} Resume
+      #restart_menu
+        %button{:onclick => "restart();document.getElementById('play_menu').style.display='block';document.getElementById('restart_menu').style.display='none';"} Restart
     %canvas#canvas{:width => 400, :height => 300}
+    

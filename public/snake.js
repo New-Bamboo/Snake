@@ -2,18 +2,38 @@ function checkSupported() {
   canvas = document.getElementById('canvas');
   if (canvas.getContext){
     ctx = canvas.getContext('2d');
-    this.currentPosition = {'x':50, 'y':50};
     this.gridSize = 10;
-    allowPressKeys = true;
-    snakeBody = [];
-    snakeLength = 3;
-    makeFoodItem();
-    drawSnake();
-    direction = 'right';
-    interval = setInterval(moveSnake,100);
+    start();
   } else {
     alert("We're sorry, but your browser does not support the canvas tag. Please use any web browser other than Internet Explorer.");
   }
+}
+
+function start(){
+  ctx.clearRect(0,0, canvas.width, canvas.height);
+  this.currentPosition = {'x':50, 'y':50};
+  snakeBody = [];
+  snakeLength = 3;
+  updateScore();
+  makeFoodItem();
+  drawSnake();
+  direction = 'right';
+  play();  
+}
+
+function restart(){
+  pause();
+  start();
+}
+
+function pause(){
+  clearInterval(interval);
+  allowPressKeys = false;
+}
+
+function play(){
+  interval = setInterval(moveSnake,100);
+  allowPressKeys = true;
 }
 
 function drawSnake() {
@@ -31,6 +51,7 @@ function drawSnake() {
   if (currentPosition['x'] == suggestedPoint[0] && currentPosition['y'] == suggestedPoint[1]) {
     makeFoodItem();
     snakeLength += 1;
+    updateScore();
   }
 }
 
@@ -116,12 +137,16 @@ function hasEatenItself(element, index, array) {
 
 function gameOver(){
   var score = (snakeLength - 3)*10;
-  clearInterval(interval);
-  snakeBody = [];
-  snakeLength = 3;
-  allowPressKeys = false;
+  pause();
   alert("Game Over. Your score was "+ score);
   ctx.clearRect(0,0, canvas.width, canvas.height);
+  document.getElementById('play_menu').style.display='none';
+  document.getElementById('restart_menu').style.display='block';
+}
+
+function updateScore(){
+  var score = (snakeLength - 3)*10
+  document.getElementById('score').innerText = score;
 }
 
 document.onkeydown = function(event) {
