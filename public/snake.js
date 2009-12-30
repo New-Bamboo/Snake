@@ -4,25 +4,30 @@ function checkSupported() {
     ctx = canvas.getContext('2d');
     this.currentPosition = {'x':50, 'y':50};
     this.gridSize = 10;
+    allowPressKeys = true;
     snakeBody = [];
     snakeLength = 3;
     makeFoodItem();
     drawSnake();
     direction = 'right';
-    setInterval(moveSnake,100);
+    interval = setInterval(moveSnake,100);
   } else {
     alert("We're sorry, but your browser does not support the canvas tag. Please use any web browser other than Internet Explorer.");
   }
 }
 
 function drawSnake() {
+  if (snakeBody.some(hasEatenItself)) {
+    gameOver();
+    return false;
+  }
   snakeBody.push([currentPosition['x'], currentPosition['y']]);
   ctx.fillStyle = "rgb(200,0,0)";
   ctx.fillRect(currentPosition['x'], currentPosition['y'], gridSize, gridSize);
   if (snakeBody.length > snakeLength) {
     var itemToRemove = snakeBody.shift();
     ctx.clearRect(itemToRemove[0], itemToRemove[1], gridSize, gridSize);
-  }
+  }  
   if (currentPosition['x'] == suggestedPoint[0] && currentPosition['y'] == suggestedPoint[1]) {
     makeFoodItem();
     snakeLength += 1;
@@ -105,10 +110,25 @@ function hasPoint(element, index, array) {
   return (element[0] == suggestedPoint[0] && element[1] == suggestedPoint[1]);
 }
 
+function hasEatenItself(element, index, array) {
+  return (element[0] == currentPosition['x'] && element[1] == currentPosition['y']);  
+}
+
+function gameOver(){
+  var score = (snakeLength - 3)*10;
+  clearInterval(interval);
+  snakeBody = [];
+  snakeLength = 3;
+  allowPressKeys = false;
+  alert("Game Over. Your score was "+ score);
+  ctx.clearRect(0,0, canvas.width, canvas.height);
+}
 
 document.onkeydown = function(event) {
+  if (!allowPressKeys){
+    return null;
+  }
   var keyCode; 
-  
   if(event == null)
   {
     keyCode = window.event.keyCode; 
@@ -121,19 +141,27 @@ document.onkeydown = function(event) {
   switch(keyCode)
   {
     case 37:
-      moveLeft();
+      if (direction != "right"){
+        moveLeft();
+      }
       break;
      
     case 38:
-      moveUp();
+      if (direction != "down"){
+        moveUp();
+      }
       break; 
       
     case 39:
-      moveRight();
+      if (direction != "left"){
+        moveRight();
+      }
       break; 
     
     case 40:
-      moveDown();
+      if (direction != "up"){
+        moveDown();
+      }
       break; 
     
     default: 
