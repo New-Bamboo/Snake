@@ -4,7 +4,9 @@
     %link{:rel => 'stylesheet', :href => '/reset.css'}
     %link{:rel => 'stylesheet', :href => '/master.css'}
     %script{:src => "snake.js", :type => "text/javascript"}
-  %body{:onload => "checkSupported();"}
+    %script{:src => "brain.js", :type => "text/javascript"}
+    
+  %body{:onload => "checkSupported();imAlive();"}
     #bar
       %span#logo SNAKE
       #score_container
