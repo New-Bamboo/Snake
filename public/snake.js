@@ -55,20 +55,24 @@ function drawSnake() {
   }
 }
 
-function leftPosition(){
- return currentPosition['x'] - gridSize;  
+function leftPosition(xCoordinate){
+ var xCoordinate = xCoordinate || currentPosition['x'];
+ return xCoordinate - gridSize;  
 }
 
-function rightPosition(){
-  return currentPosition['x'] + gridSize;
+function rightPosition(xCoordinate){
+  var xCoordinate = xCoordinate || currentPosition['x'];
+  return xCoordinate + gridSize;
 }
 
-function upPosition(){
-  return currentPosition['y'] - gridSize;  
+function upPosition(yCoordinate){
+  var yCoordinate = yCoordinate || currentPosition['y'];
+  return yCoordinate - gridSize;  
 }
 
-function downPosition(){
-  return currentPosition['y'] + gridSize;
+function downPosition(yCoordinate){
+  var yCoordinate = yCoordinate || currentPosition['y'];
+  return yCoordinate + gridSize;
 }
 
 function whichWayToGo(axisType){  
@@ -142,6 +146,7 @@ function gameOver(){
   ctx.clearRect(0,0, canvas.width, canvas.height);
   document.getElementById('play_menu').style.display='none';
   document.getElementById('restart_menu').style.display='block';
+  imAsleep();
 }
 
 function updateScore(){

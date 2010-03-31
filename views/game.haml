@@ -6,7 +6,7 @@
     %script{:src => "snake.js", :type => "text/javascript"}
     %script{:src => "brain.js", :type => "text/javascript"}
     
-  %body{:onload => "checkSupported();imAlive();"}
+  %body{:onload => "checkSupported();"}
     #bar
       %span#logo SNAKE
       #score_container
@@ -19,5 +19,8 @@
         %button{:onclick => "play();document.getElementById('play_menu').style.display='block';document.getElementById('pause_menu').style.display='none';"} Resume
       #restart_menu
         %button{:onclick => "restart();document.getElementById('play_menu').style.display='block';document.getElementById('restart_menu').style.display='none';"} Restart
+      %button{:onclick => "imAlive();"} Turn on AI
+      
+      %button{:onclick => "imAsleep();"} Turn off AI
     %canvas#canvas{:width => 400, :height => 300}
     
