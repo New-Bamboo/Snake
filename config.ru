@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'sinatra'
-
-Sinatra::Application.default_options.merge!(
-  :run => false,
-  :env => ENV['RACK_ENV']
-)
-
 require 'main'
-run Sinatra.application
+
+
+Sinatra::Base.set(:run, false)
+Sinatra::Base.set(:env, ENV['RACK_ENV'])
+
+
+run Sinatra::Application
